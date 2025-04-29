@@ -1,4 +1,4 @@
-// SortingMain.java
+// Gracie Driggers CSCE 350
 import java.io.*;
 import java.util.*;
 import java.time.*;
