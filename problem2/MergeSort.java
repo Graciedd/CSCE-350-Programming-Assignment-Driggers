@@ -1,9 +1,10 @@
 // Gracie Driggers CSCE350
-package problem2;
 import java.util.*;
 
+ // MergeSort class: performs merge sort on an array of floats.
 public class MergeSort{
 
+// Merge method that merges two sorted array into single sorted array
 private static void merge(float[] B, float[] C, float[] A){
     int i = 0; 
     int j = 0; 
@@ -26,14 +27,22 @@ private static void merge(float[] B, float[] C, float[] A){
     }
 }
 
+/**
+     * Performs merge sort on an array of floats.
+     * 
+     * @param A the array to be sorted
+     */
 public static void Mergesort(float[] A){
     int n = A.length;
     if (n <= 1) {
-        return; // BASE CASE: don't recurse on arrays of size 1
+        return; 
     }
+    // splits array
       int mid = n/2;
     float[] B = Arrays.copyOfRange(A, 0, mid);
     float[] C = Arrays.copyOfRange(A, mid, n);
+
+    //Recursive call to sort both of the halves and and then merge them
     Mergesort(B);
     Mergesort(C);
     merge(B,C,A);

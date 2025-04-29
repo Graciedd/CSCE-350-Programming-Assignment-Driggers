@@ -1,29 +1,48 @@
-// MaximumBipartiteMatchingMain.java
+// Gracie Driggers CSCE 350
 import java.io.*;
-import java.time.*;
 import java.util.*;
+import java.time.*;
 
 public class Main6 {
-
+    // Reads input from input.txt and outputs output.txt
     public static void main(String[] args) {
         List<String> V = new ArrayList<>();
         List<String> U = new ArrayList<>();
         Map<String, List<String>> adj = new HashMap<>();
 
-        if (!readInput("input.txt", V, U, adj)) {
+        if (!readInput("problem6/input.txt", V, U, adj)) {
             System.out.println("Error reading input file.");
             return;
         }
 
+        Map<String, String> match = null;
+        long executionTime = 0;
+
+        // Finds execution time
         Instant start = Instant.now();
-        Map<String, String> match = MaximumBipartiteMatching.MaximumMatching(V, U, adj);
+        match = MaximumBipartiteMatching.MaximumMatching(V, U, adj);
         Instant end = Instant.now();
+        executionTime = Duration.between(start, end).toNanos();
 
-        writeOutput(match, V, "output.txt");
-
-        System.out.println("Maximum Bipartite Matching execution time (nanoseconds): " + Duration.between(start, end).toNanos());
+        // Writes to output.txt
+        try (PrintWriter writer = new PrintWriter(new FileWriter("problem6/output.txt"))) {
+            writer.println("Maximum Bipartite Matching Output:");
+            Set<String> printed = new HashSet<>();
+            for (String v : V) {
+                if (match.containsKey(v) && !printed.contains(v)) {
+                    String u = match.get(v);
+                    writer.println(v + " " + u);
+                    printed.add(v);
+                    printed.add(u);
+                }
+            }
+            writer.println("Execution time (nanoseconds): " + executionTime);
+        } catch (IOException e) {
+            System.out.println("Error writing output file.");
+        }
     }
 
+    // Reads the input
     private static boolean readInput(String filename, List<String> V, List<String> U, Map<String, List<String>> adj) {
         try (Scanner scanner = new Scanner(new File(filename))) {
             if (!scanner.hasNextLine()) return false;
@@ -49,20 +68,5 @@ public class Main6 {
             return false;
         }
     }
-
-    private static void writeOutput(Map<String, String> match, List<String> V, String filename) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
-            Set<String> printed = new HashSet<>();
-            for (String v : V) {
-                if (match.containsKey(v) && !printed.contains(v)) {
-                    String u = match.get(v);
-                    writer.println(v + " " + u);
-                    printed.add(v);
-                    printed.add(u);
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Error writing output file.");
-        }
-    }
 }
+

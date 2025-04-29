@@ -1,10 +1,14 @@
-package problem3;
-import java.io.*;
-import java.time.*;
-import java.util.*;
+// Gracie Driggers CSCE350
 
+// Builds maxheap from unsorted array using bottom up 
 public class MaxHeap {
 
+    /**
+     * Builds a max heap using HeapBottomUp.
+     *
+     * @param H the array representing the heap (indexing starts at 1)
+     * @param n the number of elements in the heap
+     */
     public static void HeapBottomUp(int[] H, int n) {
         for (int i = n / 2; i >= 1; i--) {
             int k = i;

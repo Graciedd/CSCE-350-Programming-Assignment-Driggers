@@ -1,16 +1,17 @@
-// HorspoolMain.java
+// Gracie Driggers CSCE350
 import java.io.*;
-import java.time.*;
 import java.util.*;
+import java.time.*;
 
+// Performs Horspool and writes it to output.txt
 public class Main4 {
 
     public static void main(String[] args) {
         String pattern = "";
         String text = "";
 
-        // Read input
-        try (Scanner scanner = new Scanner(new File("input.txt"))) {
+        // Reads input from the input.txt file
+        try (Scanner scanner = new Scanner(new File("problem4/input.txt"))) {
             if (scanner.hasNextLine()) {
                 pattern = scanner.nextLine();
             }
@@ -27,20 +28,24 @@ public class Main4 {
             return;
         }
 
-        // Time the Horspool algorithm
-        Instant start = Instant.now();
-        int matchIndex = Horspool.HorspoolMatching(pattern, text);
-        Instant end = Instant.now();
+        int matchIndex = -1;
+        long executionTime = 0;
 
-        // Write output
-        try (PrintWriter writer = new PrintWriter(new FileWriter("output.txt"))) {
-            writer.println(matchIndex);
+        //  Starts the Horspool matching and counts execution time
+        Instant start = Instant.now();
+        matchIndex = Horspool.HorspoolMatching(pattern, text);
+        Instant end = Instant.now();
+        executionTime = Duration.between(start, end).toNanos();
+
+        // Writes to output.txt
+        try (PrintWriter writer = new PrintWriter(new FileWriter("problem4/output.txt"))) {
+            writer.println("Horspool's Algorithm Output: ");
+            writer.println("Match index: " + matchIndex);
+            writer.println("Execution time (nanoseconds): " + executionTime);
         } catch (IOException e) {
             System.out.println("Error writing output file.");
         }
-
-        // Print execution time
-        System.out.println("Horspool Matching execution time (nanoseconds): " + Duration.between(start, end).toNanos());
     }
 }
+
 

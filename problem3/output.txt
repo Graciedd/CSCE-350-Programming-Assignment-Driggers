@@ -1,0 +1,7 @@
+MaxHeap Output:
+99 90 67 78 19 45 23 56 8 5 12 21 34 4 11 
+Execution time (nanoseconds): 11981000
+
+MinHeap Output:
+4 5 11 8 12 21 23 56 78 90 19 34 67 45 99 
+Execution time (nanoseconds): 1001300

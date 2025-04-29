@@ -1,35 +1,54 @@
-package problem2;
-// package problem2;
+// SortingMain.java
 import java.io.*;
-import java.time.*;
 import java.util.*;
+import java.time.*;
 
 public class Main2 {
 
     public static void main(String[] args) {
+        // Loads the input.txt
         float[] arrMerge = readInput("problem2/input.txt");
-        float[] arrQuick = arrMerge.clone(); // make a copy for QuickSort
-
         if (arrMerge == null) {
             System.out.println("Error reading input file.");
             return;
         }
+        // Copies array for Quicksort
+        float[] arrQuick = arrMerge.clone();
 
-        // Run MergeSort
-        Instant startMerge = Instant.now();
-        MergeSort.Mergesort(arrMerge);
-        Instant endMerge = Instant.now();
-        writeOutput(arrMerge, "problem2/output_mergesort.txt");
-        System.out.println("MergeSort execution time (nanoseconds): " + Duration.between(startMerge, endMerge).toNanos());
+        try (PrintWriter writer = new PrintWriter(new FileWriter("problem2/output.txt"))) {
 
-        // Run QuickSort
-        Instant startQuick = Instant.now();
-        QuickSort.Quicksort(arrQuick, 0, arrQuick.length - 1);
-        Instant endQuick = Instant.now();
-        writeOutput(arrQuick, "problem2/output_quicksort.txt");
-        System.out.println("QuickSort execution time (nanoseconds): " + Duration.between(startQuick, endQuick).toNanos());
+            // Starts tracking the time of algorithms and outputs
+            Instant startMerge = Instant.now();
+            MergeSort.Mergesort(arrMerge);
+            Instant endMerge = Instant.now();
+            long mergeTime = Duration.between(startMerge, endMerge).toNanos();
+
+            writer.println("MergeSort Output:");
+            for (float num : arrMerge) {
+                writer.print(num + " ");
+            }
+            writer.println();
+            writer.println("Execution time (nanoseconds): " + mergeTime);
+            writer.println();
+
+            Instant startQuick = Instant.now();
+            QuickSort.Quicksort(arrQuick, 0, arrQuick.length - 1);
+            Instant endQuick = Instant.now();
+            long quickTime = Duration.between(startQuick, endQuick).toNanos();
+
+            writer.println("QuickSort Output:");
+            for (float num : arrQuick) {
+                writer.print(num + " ");
+            }
+            writer.println();
+            writer.println("Execution time (nanoseconds): " + quickTime);
+
+        } catch (IOException e) {
+            System.out.println("Error writing output file.");
+        }
     }
 
+    // Reads the input file
     private static float[] readInput(String filename) {
         List<Float> numbers = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(filename))) {
@@ -45,15 +64,6 @@ public class Main2 {
         }
         return arr;
     }
-
-    private static void writeOutput(float[] arr, String filename) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
-            for (float num : arr) {
-                writer.print(num + " ");
-            }
-        } catch (IOException e) {
-            System.out.println("Error writing to " + filename);
-        }
-    }
 }
+
 

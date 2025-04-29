@@ -1,0 +1,3 @@
+Horspool's Algorithm Output: 
+Match index: 10
+Execution time (nanoseconds): 983200
